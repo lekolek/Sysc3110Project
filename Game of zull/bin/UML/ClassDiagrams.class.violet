@@ -238,7 +238,8 @@
    <object id="ClassNode8" class="com.horstmann.violet.ClassNode"> 
     <void property="attributes"> 
      <void property="text"> 
-      <string>- currentRoom: Room</string> 
+      <string>- currentRoom: Room
+- steps: Stack&lt;Room&gt;</string> 
      </void> 
     </void> 
     <void property="methods"> 
