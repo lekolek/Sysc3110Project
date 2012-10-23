@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Stack; //E.K
 
 /**
  * Write a description of class Player here.
@@ -8,9 +9,11 @@ import java.util.ArrayList;
  */
 public class Player extends ItemHolder{
     private Room currentRoom;
+    private Stack<Room> steps; // to keep track of the Steps taken to get to the Current Location.
     
     public Player() {
         currentRoom = null;
+        steps = new Stack<Room>();
     }
     
     public Room getRoom() {
@@ -18,6 +21,7 @@ public class Player extends ItemHolder{
     }
 
     public void setRoom(Room room) {
+    	steps.push(currentRoom);
         currentRoom = room;
     } 
     
@@ -27,11 +31,32 @@ public class Player extends ItemHolder{
         nextRoom = currentRoom.getExitRoom(room);
 
         if (nextRoom == null) {
-            System.out.println("There is no door!");
-        } else {
+        	if(!room.equalsIgnoreCase("back")) // undo command E.K
+        	{
+        		System.out.println("There is no door!");
+        		nextRoom = currentRoom; // for refactoring the Else to get a more efficient Code for adding the Undo Command ( Go back). E.K
+        	}
+        } 
+        //else { else has been refactored.
+        	if(room.equalsIgnoreCase("back"))
+        	{
+        		//if(steps.isEmpty()) for some reason the newly created stack shows elementCount = 1, but there is no elements in it. there fore:   E.K
+        		if(steps.size()<=1)
+        		{
+        			System.out.println("You are where you started.");
+        			nextRoom=currentRoom;
+        		}
+        		else
+        		{
+        			nextRoom = steps.pop();
+        		}
+        	}
+        	else if(nextRoom != currentRoom)//Keeping track of the steps. E.K
+        	{
+        		steps.push(currentRoom);
+        	}
             currentRoom = nextRoom;
             currentRoom.look();
-        }
     }
     
     public void pickUpItem(String itemName) {
