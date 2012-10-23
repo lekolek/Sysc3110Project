@@ -27,7 +27,7 @@ public abstract class ItemHolder {
 
     public String getAllItems() {
         String allItems = new String();
-        Iterator iterator = items.iterator();
+        Iterator<Item> iterator = items.iterator(); // Fixed the warning by adding the generic type, <Item>; E.K
         
         while(iterator.hasNext()) {
             allItems = allItems + " " + iterator.next();
